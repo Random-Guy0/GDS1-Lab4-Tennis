@@ -8,12 +8,16 @@ public class LevelManager : MonoBehaviour
 {
     // Start is called before the first frame update
     
-    public void SelectLevel()
+    public void SelectMainScene()
     {
         SceneManager.LoadScene("Main Scene");
 
     }
+    public void SelectMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
 
+    }
     public void QuitGame()
     {
         Application.Quit();
