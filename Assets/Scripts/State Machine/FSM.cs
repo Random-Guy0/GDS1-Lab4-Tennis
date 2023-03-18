@@ -13,6 +13,8 @@ public enum StateType
 public class Parameter
 {
     public float moveSpeed;
+    public GameObject ball;
+    public GameObject range;
 }
 
 public class FSM : MonoBehaviour
@@ -24,6 +26,8 @@ public class FSM : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        parameter.ball = GameObject.Find("Ball");
+        parameter.range = GameObject.Find("Range");
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Chase, new ChaseState(this));
         states.Add(StateType.Hit, new HitState(this));
@@ -45,5 +49,20 @@ public class FSM : MonoBehaviour
         }
         currentState = states[type];
         currentState.OnEnter();
+    }
+
+    public void FlipTo(Transform target)
+    {
+        if(target != null)
+        {
+            if(transform.position.x > target.position.x)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else if(transform.position.x < target.position.x)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
     }
 }

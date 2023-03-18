@@ -20,7 +20,8 @@ public class IdleState : IState
 
     public void OnUpdate()
     {
-
+        //if (parameter.range.GetComponent<>().CheckBall) { }
+        manager.TransitionState(StateType.Chase);
     }
 
     public void OnExit() 
@@ -33,7 +34,7 @@ public class ChaseState : IState
 {
     private FSM manager;
     private Parameter parameter;
-
+    private int BallPosition;
     public ChaseState(FSM manager)
     {
         this.manager = manager;
@@ -47,12 +48,20 @@ public class ChaseState : IState
 
     public void OnUpdate()
     {
+        manager.FlipTo(parameter.ball.transform);
+        if (parameter.ball)
+        {
+            manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+            parameter.ball.transform.position, parameter.moveSpeed * Time.deltaTime);
+        }
 
+        //if (parameter.ball.canHit) { }
+        manager.TransitionState(StateType.Hit);
     }
 
     public void OnExit()
     {
-
+        
     }
 }
 
@@ -69,12 +78,14 @@ public class HitState : IState
 
     public void OnEnter()
     {
-
+        //animation
     }
 
     public void OnUpdate()
     {
-
+        //animation finish
+        //if (!parameter.range.GetComponent<>().CheckBall) { }
+        manager.TransitionState(StateType.Idle);
     }
 
     public void OnExit()
