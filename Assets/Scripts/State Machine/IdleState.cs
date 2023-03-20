@@ -20,8 +20,10 @@ public class IdleState : IState
 
     public void OnUpdate()
     {
-        //if (parameter.range.GetComponent<>().CheckBall) { }
-        manager.TransitionState(StateType.Chase);
+        if (parameter.range.GetComponent<RangeCheck>().GetBallCheck()) 
+        {
+            manager.TransitionState(StateType.Chase);
+        }
     }
 
     public void OnExit() 
@@ -55,8 +57,13 @@ public class ChaseState : IState
             parameter.ball.transform.position, parameter.moveSpeed * Time.deltaTime);
         }
 
+        if(Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
+        {
+            manager.TransitionState(StateType.Hit);
+        }
+
         //if (parameter.ball.canHit) { }
-        manager.TransitionState(StateType.Hit);
+        //manager.TransitionState(StateType.Hit);
     }
 
     public void OnExit()

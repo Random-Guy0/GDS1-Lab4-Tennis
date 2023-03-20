@@ -15,6 +15,9 @@ public class Parameter
     public float moveSpeed;
     public GameObject ball;
     public GameObject range;
+    public LayerMask targetLayer;
+    public Transform attackPoint;
+    public float attackArea;
 }
 
 public class FSM : MonoBehaviour
@@ -64,5 +67,10 @@ public class FSM : MonoBehaviour
                 transform.localScale = new Vector3(1, 1, 1);
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(parameter.attackPoint.position, parameter.attackArea);
     }
 }
