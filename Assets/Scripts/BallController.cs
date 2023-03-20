@@ -7,15 +7,15 @@ public class BallController : MonoBehaviour
 {
     private const float gravity = -9.8f;
     
-    private Vector2 velocity;
+    private Vector3 velocity;
 
     [SerializeField] private float jumpSpeed;
-    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float terminalVelocity;
+    [SerializeField] private float groundLevel;
 
     private void Start()
     {
-        velocity = Vector2.zero;
+        velocity = Vector3.zero;
     }
 
     private void Update()
@@ -25,14 +25,23 @@ public class BallController : MonoBehaviour
         {
             velocity.y = terminalVelocity;
         }
-        Debug.Log(velocity);
+
+        if (transform.position.y - velocity.y * Time.deltaTime <= groundLevel)
+        {
+            Vector3 position = transform.position;
+            position.y = groundLevel;
+            transform.position = position;
+
+            velocity.y = jumpSpeed;
+        }
+
+        velocity.x = 3;
+        velocity.z = 3;
+        
+        transform.position += velocity * Time.deltaTime;
     }
 
-    private void FixedUpdate()
-    {
-        rb.position += velocity * Time.deltaTime;
-    }
-
+    /*
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground"))
@@ -40,4 +49,5 @@ public class BallController : MonoBehaviour
             velocity.y = jumpSpeed;
         }
     }
+    */
 }
