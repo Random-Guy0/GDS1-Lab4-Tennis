@@ -25,6 +25,14 @@ public class RangeCheck : MonoBehaviour
             Debug.Log("InS");
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Ball")
+        {
+            BallIn = false;
+            Debug.Log("InS");
+        }
+    }
 
     public bool GetBallCheck()
     {

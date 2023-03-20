@@ -18,19 +18,21 @@ public class Parameter
     public LayerMask targetLayer;
     public Transform attackPoint;
     public float attackArea;
+    public GameObject middle;
 }
 
 public class FSM : MonoBehaviour
 {
     public Parameter parameter = new Parameter();
 
-    private IState currentState;
+    public IState currentState;
     private Dictionary<StateType, IState> states = new Dictionary<StateType, IState>();
     // Start is called before the first frame update
     void Start()
     {
         parameter.ball = GameObject.Find("Ball");
         parameter.range = GameObject.Find("Range");
+        parameter.middle = GameObject.Find("middle");
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Chase, new ChaseState(this));
         states.Add(StateType.Hit, new HitState(this));

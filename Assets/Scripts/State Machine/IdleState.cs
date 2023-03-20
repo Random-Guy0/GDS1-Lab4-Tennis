@@ -15,7 +15,7 @@ public class IdleState : IState
 
     public void OnEnter()
     {
-
+       
     }
 
     public void OnUpdate()
@@ -28,7 +28,7 @@ public class IdleState : IState
 
     public void OnExit() 
     { 
-    
+
     }
 }
 
@@ -36,7 +36,6 @@ public class ChaseState : IState
 {
     private FSM manager;
     private Parameter parameter;
-    private int BallPosition;
     public ChaseState(FSM manager)
     {
         this.manager = manager;
@@ -51,10 +50,11 @@ public class ChaseState : IState
     public void OnUpdate()
     {
         manager.FlipTo(parameter.ball.transform);
+        Vector2 ball = new Vector2(parameter.ball.transform.position.x, manager.transform.position.y);
         if (parameter.ball)
         {
             manager.transform.position = Vector2.MoveTowards(manager.transform.position,
-            parameter.ball.transform.position, parameter.moveSpeed * Time.deltaTime);
+            ball, parameter.moveSpeed * Time.deltaTime);
         }
 
         if(Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
@@ -90,9 +90,10 @@ public class HitState : IState
 
     public void OnUpdate()
     {
-        //animation finish
-        //if (!parameter.range.GetComponent<>().CheckBall) { }
-        manager.TransitionState(StateType.Idle);
+        if (parameter.range.GetComponent<RangeCheck>().GetBallCheck() == false)
+        {
+            manager.TransitionState(StateType.Idle);
+        }
     }
 
     public void OnExit()
