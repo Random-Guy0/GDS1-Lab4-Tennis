@@ -20,6 +20,9 @@ public class IdleState : IState
 
     public void OnUpdate()
     {
+        Vector2 back = new Vector2(manager.transform.position.x, 0);
+        manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+            back, parameter.moveSpeed * Time.deltaTime);
         if (parameter.range.GetComponent<RangeCheck>().GetBallCheck()) 
         {
             manager.TransitionState(StateType.Chase);
@@ -57,7 +60,12 @@ public class ChaseState : IState
             ball, parameter.moveSpeed * Time.deltaTime);
         }
 
-        if(Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
+        if (parameter.hit.GetComponent<RangeCheck>().GetBallCheck())
+        {
+            manager.TransitionState(StateType.Attack);
+        }
+
+        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
         {
             manager.TransitionState(StateType.Hit);
         }
@@ -90,9 +98,42 @@ public class HitState : IState
 
     public void OnUpdate()
     {
+        manager.FlipTo(parameter.ball.transform);
         if (parameter.range.GetComponent<RangeCheck>().GetBallCheck() == false)
         {
             manager.TransitionState(StateType.Idle);
+        }
+    }
+
+    public void OnExit()
+    {
+
+    }
+}
+
+public class AttackState : IState
+{
+    private FSM manager;
+    private Parameter parameter;
+
+    public AttackState(FSM manager)
+    {
+        this.manager = manager;
+        this.parameter = manager.parameter;
+    }
+
+    public void OnEnter()
+    {
+
+    }
+
+    public void OnUpdate()
+    {
+        manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+            parameter.ball.transform.position, parameter.moveSpeed * Time.deltaTime);
+        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
+        {
+            manager.TransitionState(StateType.Hit);
         }
     }
 

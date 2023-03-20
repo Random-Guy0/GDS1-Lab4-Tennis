@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum StateType
 {
-    Idle,Chase,Hit
+    Idle,Chase,Hit,Attack
 }
 
 [Serializable]
@@ -19,6 +19,7 @@ public class Parameter
     public Transform attackPoint;
     public float attackArea;
     public GameObject middle;
+    public GameObject hit;
 }
 
 public class FSM : MonoBehaviour
@@ -33,9 +34,11 @@ public class FSM : MonoBehaviour
         parameter.ball = GameObject.Find("Ball");
         parameter.range = GameObject.Find("Range");
         parameter.middle = GameObject.Find("middle");
+        parameter.hit = GameObject.Find("Hit");
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Chase, new ChaseState(this));
         states.Add(StateType.Hit, new HitState(this));
+        states.Add(StateType.Attack, new AttackState(this));
 
         TransitionState(StateType.Idle);
     }
