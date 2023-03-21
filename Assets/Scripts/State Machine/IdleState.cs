@@ -73,9 +73,10 @@ public class ChaseState : IState
         {
             manager.TransitionState(StateType.Hit);
         }
-
-        //if (parameter.ball.canHit) { }
-        //manager.TransitionState(StateType.Hit);
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck() == false)
+        {
+            manager.TransitionState(StateType.Idle);
+        }
     }
 
     public void OnExit()
