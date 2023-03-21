@@ -19,6 +19,7 @@ public class Parameter
     public LayerMask targetLayer;
     public Transform attackPoint;
     public float attackArea;
+    public bool isHit;
 }
 
 public class FSM : MonoBehaviour
@@ -37,6 +38,7 @@ public class FSM : MonoBehaviour
         states.Add(StateType.Chase, new ChaseState(this));
         states.Add(StateType.Hit, new HitState(this));
         states.Add(StateType.Attack, new AttackState(this));
+        parameter.isHit = true;
 
         TransitionState(StateType.Idle);
     }
@@ -75,5 +77,13 @@ public class FSM : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(parameter.attackPoint.position, parameter.attackArea);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == "Ball")
+        {
+            parameter.isHit = false;
+        }
     }
 }
