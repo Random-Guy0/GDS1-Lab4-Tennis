@@ -142,6 +142,10 @@ public class AttackState : IState
         {
             manager.TransitionState(StateType.Hit);
         }
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck() == false)
+        {
+            manager.TransitionState(StateType.Idle);
+        }
     }
 
     public void OnExit()
