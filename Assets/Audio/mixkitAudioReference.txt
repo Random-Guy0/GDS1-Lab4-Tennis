@@ -1,0 +1,8 @@
+All game audio files have been fond on https://mixkit.co/free-sound-effects/game/ on 21/03/2023
+A total of 6 Audio Files are used and have been renamed to
+mixkit-arcade-game-opener-222			Intro
+mixkit-game-level-music-689			Background
+mixkit-boxer-getting-hit-2055			PlayerHit
+mixkit-martial-arts-punch-2052			BallBounce
+mixkit-completion-of-a-level-2063		Win
+mixkit-player-losing-or-failing-2042		Lose
