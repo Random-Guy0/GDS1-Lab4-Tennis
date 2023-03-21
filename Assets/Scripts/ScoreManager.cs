@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -128,7 +129,7 @@ public class ScoreManager : MonoBehaviour
         playerSetText.SetText(playerSets.ToString());
         if (playerSets >= 6)
         {
-            //win game
+            SceneManager.LoadScene("Win");
         }
     }
 
@@ -138,7 +139,7 @@ public class ScoreManager : MonoBehaviour
         enemySetText.SetText(enemySets.ToString());
         if (enemySets >= 6)
         {
-            //win game
+            SceneManager.LoadScene("Game Over");
         }
     }
 
