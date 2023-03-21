@@ -23,7 +23,7 @@ public class IdleState : IState
         Vector2 back = new Vector2(manager.transform.position.x, 0);
         manager.transform.position = Vector2.MoveTowards(manager.transform.position,
             back, parameter.moveSpeed * Time.deltaTime);
-        if (parameter.range.GetComponent<RangeCheck>().GetBallCheck()) 
+        if (parameter.chaseRange.GetComponent<RangeCheck>().GetBallCheck()) 
         {
             manager.TransitionState(StateType.Chase);
         }
@@ -60,7 +60,7 @@ public class ChaseState : IState
             ball, parameter.moveSpeed * Time.deltaTime);
         }
 
-        if (parameter.hit.GetComponent<RangeCheck>().GetBallCheck())
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck())
         {
             manager.TransitionState(StateType.Attack);
         }
@@ -99,7 +99,7 @@ public class HitState : IState
     public void OnUpdate()
     {
         manager.FlipTo(parameter.ball.transform);
-        if (parameter.range.GetComponent<RangeCheck>().GetBallCheck() == false)
+        if (parameter.chaseRange.GetComponent<RangeCheck>().GetBallCheck() == false)
         {
             manager.TransitionState(StateType.Idle);
         }

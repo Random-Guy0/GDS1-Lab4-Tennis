@@ -14,12 +14,11 @@ public class Parameter
 {
     public float moveSpeed;
     public GameObject ball;
-    public GameObject range;
+    public GameObject chaseRange;
+    public GameObject hitRange;
     public LayerMask targetLayer;
     public Transform attackPoint;
     public float attackArea;
-    public GameObject middle;
-    public GameObject hit;
 }
 
 public class FSM : MonoBehaviour
@@ -32,9 +31,8 @@ public class FSM : MonoBehaviour
     void Start()
     {
         parameter.ball = GameObject.Find("Ball");
-        parameter.range = GameObject.Find("Range");
-        parameter.middle = GameObject.Find("middle");
-        parameter.hit = GameObject.Find("Hit");
+        parameter.chaseRange = GameObject.Find("ChaseRange");
+        parameter.hitRange = GameObject.Find("HitRange");
         states.Add(StateType.Idle, new IdleState(this));
         states.Add(StateType.Chase, new ChaseState(this));
         states.Add(StateType.Hit, new HitState(this));
