@@ -56,7 +56,7 @@ public class FSM : MonoBehaviour
         {
             currentState.OnExit();
         }
-        if (type == StateType.Chase)
+        if (type != StateType.Idle)
         {
             animator.SetBool("IsRun", true);
         }
