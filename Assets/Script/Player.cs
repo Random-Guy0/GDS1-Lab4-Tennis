@@ -82,6 +82,10 @@ public class Player : MonoBehaviour
     {
         return rawInputMovement.magnitude;
     }
+    public float GetCurrentSpeed()
+    {
+        return rawInputMovement.magnitude * speed;
+    }
     //void Target()
     //{
     //    // determine firing vector
