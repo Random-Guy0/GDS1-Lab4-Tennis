@@ -14,9 +14,16 @@ public class BallClone : MonoBehaviour
     [SerializeField] private float terminalVelocity;
     [SerializeField] private float groundLevel;
 
+    [SerializeField] private AudioSource ballBounceSound;
+
+    private int bounces;
+    private float timeSinceLastBounce;
+
     private void Start()
     {
         velocity = Vector3.zero;
+        bounces = 0;
+        timeSinceLastBounce = 0;
     }
 
     private void Update()
@@ -27,22 +34,37 @@ public class BallClone : MonoBehaviour
             velocity.y = terminalVelocity;
         }
 
-        if (transform.position.y - velocity.y * Time.deltaTime <= groundLevel + transform.localScale.y / 2)
+        if (transform.position.y - velocity.y * Time.deltaTime <= groundLevel + transform.localScale.y / 2.0f)
         {
             Vector3 position = transform.position;
             position.y = groundLevel + transform.localScale.y/2 ;
             transform.position = position;
 
             velocity.y = jumpSpeed;
+
+            ballBounceSound.Play();
+            if (playerLastHit != null && timeSinceLastBounce >= 0.5f)
+            {
+                bounces++;
+                timeSinceLastBounce = 0;
+            }
+        }
+
+        float nextZ = transform.position.z - velocity.z * Time.deltaTime;
+        if ((transform.position.z <= 0 && nextZ >= 0) || (transform.position.z >= 0 && nextZ <= 0))
+        {
+            bounces = 0;
         }
         
         transform.position += velocity * Time.deltaTime;
+        timeSinceLastBounce += Time.deltaTime;
     }
 
     public void SetVelocity(Vector3 newVelocity)
     {
         velocity = newVelocity;
         SetTransformY(1.5f);
+        bounces = 0;
     }
     public Vector3 GetVelocity()
     {
@@ -63,6 +85,16 @@ public class BallClone : MonoBehaviour
     void SetTransformY(float posy)
     {
         transform.position = new Vector3(transform.position.x, posy, transform.position.z);
+    }
+
+    public int GetBounces()
+    {
+        return bounces;
+    }
+
+    public void ResetBounces()
+    {
+        bounces = 0;
     }
 
     /*

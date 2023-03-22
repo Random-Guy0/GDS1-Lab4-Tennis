@@ -26,6 +26,14 @@ public class Player : MonoBehaviour
         Vector2 inputMovement = value.ReadValue<Vector2>();
         //MovementInputData = inputMovement;
         rawInputMovement = new Vector3(inputMovement.x, 0, inputMovement.y);
+        if (inputMovement.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (inputMovement.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
         //transform.LookAt(transform.position + rawInputMovement);
         //float speedmod = Mathf.Sqrt(Mathf.Pow(inputMovement.x, 2) + Mathf.Pow(inputMovement.y, 2));
         //anim.SetFloat("Speed", _effectiveSpeed * speedmod);
@@ -59,7 +67,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.name == ball.name && ball.GetPlayerLastHit() != gameObject)
+        if (other.gameObject == ball.gameObject && ball.GetPlayerLastHit() != gameObject)
         {
             Debug.Log(ball.GetDirVelocity());
             if (ball.GetDirVelocity().magnitude <= 0.1f && serving)
@@ -75,7 +83,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(rawInputMovement * speed * Time.deltaTime);
+        transform.Translate(rawInputMovement * speed * Time.deltaTime,Space.World);
         currentSpeed = GetCurrentSpeed();
         animator.SetFloat("Speed", Mathf.Abs(currentSpeed));
 

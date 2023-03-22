@@ -17,16 +17,36 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text playerSetText;
     [SerializeField] private TMP_Text enemySetText;
 
+    [SerializeField] private GameObject ball;
+    [SerializeField] private BallClone ballController;
+    [SerializeField] private Vector2 playAreaMax;
+    [SerializeField] private Vector2 playAreaMin;
+    [SerializeField] private float netZPos;
+
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject enemy;
+
+    private Vector3 initialPlayerPos;
+    private Vector3 initialEnemyPos;
+    private Vector3 initialBallPos;
+
     private void Start()
     {
         playerScore = Score.Zero;
         enemyScore = Score.Zero;
+
+        initialPlayerPos = player.transform.position;
+        initialEnemyPos = enemy.transform.position;
+        initialBallPos = ball.transform.position;
     }
 
     private void UpdateText(Score updateScore, TMP_Text updateText)
     {
         switch (updateScore)
         {
+            case Score.Zero:
+                updateText.SetText("0");
+                break;
             case Score.Fifteen:
                 updateText.SetText("15");
                 break;
@@ -46,15 +66,15 @@ public class ScoreManager : MonoBehaviour
     {
         if (isPlayer)
         {
-            ScorePoint(playerScore, playerScoreText, enemyScore, enemyScoreText, isPlayer);
+            ScorePoint(playerScore, enemyScore, isPlayer);
         }
         else
         {
-            ScorePoint(enemyScore, enemyScoreText, playerScore, playerScoreText, isPlayer);
+            ScorePoint(enemyScore, playerScore, isPlayer);
         }
     }
 
-    private void ScorePoint(Score winnerScore, TMP_Text winnerText, Score loserScore, TMP_Text loserText, bool isPlayer)
+    private void ScorePoint(Score winnerScore, Score loserScore, bool isPlayer)
     {
         switch (winnerScore)
         {
@@ -74,7 +94,6 @@ public class ScoreManager : MonoBehaviour
                         {
                             playerScore--;
                         }
-                        UpdateText(loserScore, loserText);
                         break;
                     
                     case Score.Forty:
@@ -106,8 +125,6 @@ public class ScoreManager : MonoBehaviour
                 }
                 break;
         }
-        
-        UpdateText(winnerScore, winnerText);
     }
 
     private void EndSet(bool isPlayer)
@@ -147,7 +164,30 @@ public class ScoreManager : MonoBehaviour
     {
         playerScore = Score.Zero;
         enemyScore = Score.Zero;
+        UpdateText(playerScore, playerScoreText);
+        UpdateText(enemyScore, enemyScoreText);
         //reset game and switch server
+    }
+
+    private void Update()
+    {
+        Vector3 ballPos = ball.transform.position;
+
+        if (ballPos.x < playAreaMin.x || ballPos.z < playAreaMin.y || ballPos.x > playAreaMax.x ||
+            ballPos.z > playAreaMax.y || ballController.GetBounces() >= 2)
+        {
+
+            bool isPlayer = ballPos.z > netZPos;
+            ScorePoint(isPlayer);
+            UpdateText(playerScore, playerScoreText);
+            UpdateText(enemyScore, enemyScoreText);
+
+            player.transform.position = initialPlayerPos;
+            enemy.transform.position = initialEnemyPos;
+            ball.transform.position = initialBallPos;
+            ballController.SetVelocity(Vector3.zero);
+            ballController.SetPlayerLastHit(null);
+        }
     }
 }
 
