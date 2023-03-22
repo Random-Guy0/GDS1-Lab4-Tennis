@@ -30,6 +30,7 @@ public class IdleState : IState
         if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck())
         {
             manager.TransitionState(StateType.Attack);
+
         }
     }
 
@@ -67,6 +68,7 @@ public class ChaseState : IState
         if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck())
         {
             manager.TransitionState(StateType.Attack);
+
         }
 
         if (!parameter.isHit)
