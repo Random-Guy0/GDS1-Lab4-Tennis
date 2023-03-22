@@ -17,20 +17,18 @@ public class RangeCheck : MonoBehaviour
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.name == "Ball")
         {
             BallIn = true;
-            Debug.Log("InS");
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.name == "Ball")
         {
             BallIn = false;
-            Debug.Log("InS");
         }
     }
 

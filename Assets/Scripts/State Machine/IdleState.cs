@@ -15,17 +15,21 @@ public class IdleState : IState
 
     public void OnEnter()
     {
-       
+        Debug.Log("IDLE");
     }
 
     public void OnUpdate()
     {
-        Vector2 back = new Vector2(manager.transform.position.x, 0);
-        manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+        Vector3 back = new Vector3(manager.transform.position.x, 1f, 8f);
+        manager.transform.position = Vector3.MoveTowards(manager.transform.position,
             back, parameter.moveSpeed * Time.deltaTime);
         if (parameter.chaseRange.GetComponent<RangeCheck>().GetBallCheck()) 
         {
             manager.TransitionState(StateType.Chase);
+        }
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck())
+        {
+            manager.TransitionState(StateType.Attack);
         }
     }
 
@@ -47,16 +51,16 @@ public class ChaseState : IState
 
     public void OnEnter()
     {
-
+        Debug.Log("Chase");
     }
 
     public void OnUpdate()
     {
         manager.FlipTo(parameter.ball.transform);
-        Vector2 ball = new Vector2(parameter.ball.transform.position.x, manager.transform.position.y);
+        Vector3 ball = new Vector3(parameter.ball.transform.position.x, manager.transform.position.y, 8);
         if (parameter.ball)
         {
-            manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+            manager.transform.position = Vector3.MoveTowards(manager.transform.position,
             ball, parameter.moveSpeed * Time.deltaTime);
         }
 
@@ -65,13 +69,14 @@ public class ChaseState : IState
             manager.TransitionState(StateType.Attack);
         }
 
-        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
+        if (!parameter.isHit)
         {
             manager.TransitionState(StateType.Hit);
         }
-
-        //if (parameter.ball.canHit) { }
-        //manager.TransitionState(StateType.Hit);
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck() == false)
+        {
+            manager.TransitionState(StateType.Idle);
+        }
     }
 
     public void OnExit()
@@ -85,6 +90,7 @@ public class HitState : IState
     private FSM manager;
     private Parameter parameter;
 
+
     public HitState(FSM manager)
     {
         this.manager = manager;
@@ -93,13 +99,13 @@ public class HitState : IState
 
     public void OnEnter()
     {
-        //animation
+        Debug.Log("hit");
     }
 
     public void OnUpdate()
     {
         manager.FlipTo(parameter.ball.transform);
-        if (parameter.chaseRange.GetComponent<RangeCheck>().GetBallCheck() == false)
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck() == false)
         {
             manager.TransitionState(StateType.Idle);
         }
@@ -124,21 +130,26 @@ public class AttackState : IState
 
     public void OnEnter()
     {
-
+        Debug.Log("attack");
     }
 
     public void OnUpdate()
     {
-        manager.transform.position = Vector2.MoveTowards(manager.transform.position,
+        Vector3 ball = new Vector3(parameter.ball.transform.position.x, 1, parameter.ball.transform.position.z);
+        manager.transform.position = Vector3.MoveTowards(manager.transform.position,
             parameter.ball.transform.position, parameter.moveSpeed * Time.deltaTime);
-        if (Physics2D.OverlapCircle(parameter.attackPoint.position, parameter.attackArea, parameter.targetLayer))
+        if (!parameter.isHit)
         {
             manager.TransitionState(StateType.Hit);
+        }
+        if (parameter.hitRange.GetComponent<RangeCheck>().GetBallCheck() == false)
+        {
+            manager.TransitionState(StateType.Idle);
         }
     }
 
     public void OnExit()
     {
-
+        parameter.isHit = true;
     }
 }

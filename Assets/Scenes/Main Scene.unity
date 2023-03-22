@@ -1758,7 +1758,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437009744}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1852825006
+=======
+--- !u!1 &1502754322
+>>>>>>> ScoreManager
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1766,16 +1770,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 1852825009}
   - component: {fileID: 1852825008}
   - component: {fileID: 1852825007}
   m_Layer: 0
   m_Name: SoundManager
+=======
+  - component: {fileID: 1502754324}
+  - component: {fileID: 1502754323}
+  m_Layer: 0
+  m_Name: Score Manager
+>>>>>>> ScoreManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!82 &1852825007
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1873,11 +1885,15 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!114 &1852825008
+=======
+--- !u!114 &1502754323
+>>>>>>> ScoreManager
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1852825006}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1887,14 +1903,33 @@ MonoBehaviour:
   audioSource: {fileID: 1852825007}
   clip: {fileID: 8300000, guid: ee8acdb2f90873b44abdb42a6f1a55d0, type: 3}
 --- !u!4 &1852825009
+=======
+  m_GameObject: {fileID: 1502754322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca38f8f73472ddb4b93d63f115b5290b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScoreText: {fileID: 1008566375}
+  enemyScoreText: {fileID: 21748299}
+  playerSetText: {fileID: 1160637702}
+  enemySetText: {fileID: 1853877387}
+--- !u!4 &1502754324
+>>>>>>> ScoreManager
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1852825006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.36105788, y: -0.019334435, z: -0.056950204}
+=======
+  m_GameObject: {fileID: 1502754322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+>>>>>>> ScoreManager
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
