@@ -27,6 +27,7 @@ public class FSM : MonoBehaviour
     public Parameter parameter = new Parameter();
 
     public IState currentState;
+    public Animator animator;
     private Dictionary<StateType, IState> states = new Dictionary<StateType, IState>();
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,14 @@ public class FSM : MonoBehaviour
         if(currentState != null)
         {
             currentState.OnExit();
+        }
+        if (type == StateType.Chase)
+        {
+            animator.SetBool("IsRun", true);
+        }
+        else if (type == StateType.Idle)
+        {
+            animator.SetBool("IsRun", false);
         }
         currentState = states[type];
         currentState.OnEnter();

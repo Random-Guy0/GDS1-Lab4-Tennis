@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     Rigidbody rb;
     Collider cl;
     public Animator animator;
+    public float currentSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
         vel.y = 2.1f + distance/10;
         ball.SetVelocity(vel);
         ball.SetPlayerLastHit(gameObject);
+        animator.SetTrigger("IsHit");
     }
     private void OnTriggerStay(Collider other)
     {
@@ -74,11 +76,21 @@ public class Player : MonoBehaviour
     void Update()
     {
         transform.Translate(rawInputMovement * speed * Time.deltaTime);
-        animator.SetFloat("Speed", Mathf.Abs(speed));
+        currentSpeed = GetCurrentSpeed();
+        animator.SetFloat("Speed", Mathf.Abs(currentSpeed));
+
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(curTarget, 0.5f);
+    }
+    public float GetInputMagnitude()
+    {
+        return rawInputMovement.magnitude;
+    }
+    public float GetCurrentSpeed()
+    {
+        return rawInputMovement.magnitude * speed;
     }
     //void Target()
     //{
