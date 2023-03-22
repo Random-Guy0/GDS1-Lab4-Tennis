@@ -1615,6 +1615,7 @@ MonoBehaviour:
   ball: {fileID: 181081833}
   targetZone: {fileID: 1986826444}
   speed: 5
+  animator: {fileID: 1766394332}
 --- !u!54 &1766394329
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1909,6 +1910,7 @@ MonoBehaviour:
   ball: {fileID: 181081833}
   targetZone: {fileID: 243899406}
   speed: 5
+  animator: {fileID: 0}
 --- !u!136 &1912326648
 CapsuleCollider:
   m_ObjectHideFlags: 0

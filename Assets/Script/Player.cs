@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         transform.Translate(rawInputMovement * speed * Time.deltaTime);
+        animator.SetFloat("Speed", Mathf.Abs(speed));
     }
     private void OnDrawGizmosSelected()
     {
