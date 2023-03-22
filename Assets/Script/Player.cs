@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     bool serving = false;
     Rigidbody rb;
     Collider cl;
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,7 +73,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(rawInputMovement * speed * Time.deltaTime);   
+        transform.Translate(rawInputMovement * speed * Time.deltaTime);
+        animator.SetFloat("Speed", Mathf.Abs(speed));
     }
     private void OnDrawGizmosSelected()
     {
