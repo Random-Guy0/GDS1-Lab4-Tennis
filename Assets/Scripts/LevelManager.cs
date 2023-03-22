@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     
     public void SelectMainScene()
     {
-        SceneManager.LoadScene("Main Scene");
+        SceneManager.LoadScene("tenis");
 
     }
     public void SelectMainMenu()

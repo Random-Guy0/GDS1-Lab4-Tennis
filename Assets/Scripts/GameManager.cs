@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         switch (scene.name)
         {
-            case "Main Scene":
+            case "tenis":
                 SetupGame();
                 break;
             case "Win":
