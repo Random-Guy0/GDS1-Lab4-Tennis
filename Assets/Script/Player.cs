@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.name == ball.name && ball.GetPlayerLastHit() != gameObject)
+        if (other.gameObject == ball.gameObject && ball.GetPlayerLastHit() != gameObject)
         {
             Debug.Log(ball.GetDirVelocity());
             if (ball.GetDirVelocity().magnitude <= 0.1f && serving)

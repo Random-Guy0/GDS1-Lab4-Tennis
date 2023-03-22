@@ -18,6 +18,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text enemySetText;
 
     [SerializeField] private GameObject ball;
+    [SerializeField] private BallClone ballController;
     [SerializeField] private Vector2 playAreaMax;
     [SerializeField] private Vector2 playAreaMin;
     [SerializeField] private float netZPos;
@@ -173,8 +174,9 @@ public class ScoreManager : MonoBehaviour
         Vector3 ballPos = ball.transform.position;
 
         if (ballPos.x < playAreaMin.x || ballPos.z < playAreaMin.y || ballPos.x > playAreaMax.x ||
-            ballPos.z > playAreaMax.y)
+            ballPos.z > playAreaMax.y || ballController.GetBounces() >= 2)
         {
+
             bool isPlayer = ballPos.z > netZPos;
             ScorePoint(isPlayer);
             UpdateText(playerScore, playerScoreText);
@@ -183,7 +185,6 @@ public class ScoreManager : MonoBehaviour
             player.transform.position = initialPlayerPos;
             enemy.transform.position = initialEnemyPos;
             ball.transform.position = initialBallPos;
-            BallClone ballController = ball.GetComponent<BallClone>();
             ballController.SetVelocity(Vector3.zero);
             ballController.SetPlayerLastHit(null);
         }
