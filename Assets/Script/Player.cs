@@ -79,6 +79,14 @@ public class Player : MonoBehaviour
     {
         Gizmos.DrawWireSphere(curTarget, 0.5f);
     }
+    public float GetInputMagnitude()
+    {
+        return rawInputMovement.magnitude;
+    }
+    public float GetCurrentSpeed()
+    {
+        return rawInputMovement.magnitude * speed;
+    }
     //void Target()
     //{
     //    // determine firing vector
